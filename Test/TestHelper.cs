@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Threading;
@@ -152,6 +153,17 @@ namespace Test
         private static void Configuration_ConfigurationFailed(object sender, ConfigurationFailedEventArgs e)
         {
             Assert.Fail(e.Message);
+        }
+
+        public static void WebFetch()
+        {
+            // cloudflair has a website at this address, should be accessible from any
+            // computer with a connection to the Internet
+            var uriString = "http://1.1.1.1";
+
+            using var webClient = new WebClient();
+            var stream = webClient.OpenRead(uriString);
+            stream.Close();
         }
     }
 }
